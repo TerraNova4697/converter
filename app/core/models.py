@@ -14,6 +14,8 @@ class UserManager(BaseUserManager):
 
     def create_user(self, email, password=None, **kwargs):
         """Create and return a new user."""
+        if not email:
+            raise ValueError('Email обязателен при регистрации.')
         user = self.model(email=self.normalize_email(email), **kwargs)
         user.set_password(password)
         user.save()
