@@ -19,7 +19,7 @@ def get_rates(request):
     """API method to get current rates."""
     if request.method == 'GET':
         if 'from' not in request.GET or 'to' not in request.GET:
-            return ResponseBadRequest("Bad request: 'from' and 'to' query parameters are obligatory.")
+            raise ResponseBadRequest("Bad request: 'from' and 'to' query parameters are obligatory.")
         rm = RatesManager(**request.GET)
         response = rm.get_rates()
         # currency = request.GET.get('from')
