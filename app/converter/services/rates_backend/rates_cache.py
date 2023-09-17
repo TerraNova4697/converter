@@ -17,10 +17,17 @@ class RatesCache(Singleton, RatesSource):
         )
 
     def get_rates(self, key: str):
-        """Returns string representation of rates if exists in cache and still valid. Otherwise returns None."""
+        """
+        Returns string representation of rates if exists in cache and still valid. Otherwise returns None.
+
+        Returns:
+            str of rates OR None if does not exist.
+        """
         return self._redis.get(key)
 
     def save_rates(self, key: str, value: str):
-        """Saves given currencies as a key and its rates as value for one hour."""
+        """
+        Saves given currencies as a key and its rates as value for one hour.
+        """
         hour_in_sec = 60*60*60
         self._redis.set(name=key, value=value, ex=hour_in_sec)

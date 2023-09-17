@@ -18,7 +18,9 @@ from converter.exceptions.http_exceptions import ResponseBadRequest
 
 @api_view(['GET'])
 def get_rates(request):
-    """API method to get current rates."""
+    """
+    API method to get current rates. 'from' and 'to' query parameters must be provided.
+    """
     if request.method == 'GET':
         if 'from' not in request.GET or 'to' not in request.GET:
             raise ResponseBadRequest("Bad request: 'from' and 'to' query parameters are obligatory.")
@@ -36,7 +38,9 @@ def get_rates(request):
 @cache_page(60 * 30)
 @api_view(['GET'])
 def currencies_list(request):
-    """API method to get all available currencies."""
+    """
+    API method to get all available currencies.
+    """
     if request.method == 'GET':
         currencies = Currency.objects.all()
         serializer = CurrencySerializer(currencies, many=True)

@@ -14,7 +14,12 @@ class RatesAPI(Singleton, RatesSource):
     """Fetching rates from API."""
 
     def _base_request(self, **kwargs):
-        """Base method for API request."""
+        """
+        Base method for API request. Builds final response url and requests.
+
+        Returns:
+            str of response.
+        """
         req_type = kwargs.get('req_type')
 
         if req_type == 'get':
@@ -33,7 +38,12 @@ class RatesAPI(Singleton, RatesSource):
                 print(e)
 
     def get_rates(self, currency: str, to: str):
-        """Fetching rates for one currency compared to another from external API."""
+        """
+        Fetching rates for one currency compared to another from external API.
+
+        Returns:
+            str of response
+        """
         endpoint = f'/rates/merchant/{currency}/{to}'
         return self._base_request(req_type='get', endpoint=endpoint)
 
