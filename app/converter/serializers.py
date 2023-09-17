@@ -6,6 +6,11 @@ from rest_framework import serializers
 from converter.models import Currency
 
 
+class RatesSerializer(serializers.Serializer):
+    """Basic serializer for Rates response."""
+    result = serializers.FloatField(min_value=0.000001)
+
+
 class CurrencySerializer(serializers.ModelSerializer):
     """Basic serializer for Currency object."""
 
