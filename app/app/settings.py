@@ -56,6 +56,20 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+if DEBUG:
+    INSTALLED_APPS = INSTALLED_APPS + [
+        'debug_toolbar',
+    ]
+    MIDDLEWARE = [
+        "debug_toolbar.middleware.DebugToolbarMiddleware",
+    ] + MIDDLEWARE
+    INTERNAL_IPS = [
+        "127.0.0.1",
+    ]
+    DEBUG_TOOLBAR_CONFIG = {
+        "SHOW_TOOLBAR_CALLBACK": lambda request: True,
+    }
+
 ROOT_URLCONF = 'app.urls'
 
 TEMPLATES = [
@@ -87,6 +101,13 @@ DATABASES = {
         'NAME': os.environ.get('DB_NAME'),
         'USER': os.environ.get('DB_USER'),
         'PASSWORD': os.environ.get('DB_PASS'),
+    }
+}
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": "redis://default:eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81@cache:6379",
     }
 }
 

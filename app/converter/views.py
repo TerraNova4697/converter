@@ -4,6 +4,8 @@ Views for Converter APIs.
 import json
 
 from django.shortcuts import render
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
@@ -31,6 +33,7 @@ def get_rates(request):
             return Response(serializer.errors, status=400)
 
 
+@cache_page(60 * 30)
 @api_view(['GET'])
 def currencies_list(request):
     """API method to get all available currencies."""
