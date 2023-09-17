@@ -5,11 +5,12 @@ import requests
 from requests.exceptions import HTTPError, Timeout
 
 from converter.services.rates_backend.rates_source import RatesSource
+from converter.services.singleton import Singleton
 
 BASE_URL = 'https://api.coingate.com/api/v2'
 
 
-class RatesAPI(RatesSource):
+class RatesAPI(Singleton, RatesSource):
     """Fetching rates from API."""
 
     def _base_request(self, **kwargs):

@@ -4,9 +4,10 @@ Redis cache class for caching rates.
 import redis
 
 from converter.services.rates_backend.rates_source import RatesSource
+from converter.services.singleton import Singleton
 
 
-class RatesCache(RatesSource):
+class RatesCache(Singleton, RatesSource):
     """Redis chache class."""
 
     def __init__(self):
