@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 import os
 from pathlib import Path
+import logging.config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -109,6 +110,35 @@ CACHES = {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
         "LOCATION": "redis://default:eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81@cache:6379",
     }
+}
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'default': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs', 'debug.log'),
+        },
+        'file': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs', 'errors.log'),  # Specify your custom log file path
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['default'],  # Include your custom handler here
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+        'converter': {
+            'handlers': ['file'],  # Include your custom handler here
+            'level': 'ERROR',
+            'propagate': True,
+        },
+    },
 }
 
 

@@ -3,11 +3,14 @@ Backend for getting rates from the external API.
 """
 import requests
 from requests.exceptions import HTTPError, Timeout
+import logging
+
 
 from converter.services.rates_backend.rates_source import RatesSource
 from converter.services.singleton import Singleton
 
 BASE_URL = 'https://api.coingate.com/api/v2'
+logger = logging.getLogger('converter')
 
 
 class RatesAPI(Singleton, RatesSource):
@@ -34,8 +37,7 @@ class RatesAPI(Singleton, RatesSource):
                 response = requests.get(url=request_url, headers=headers)
                 return response.text
             except (HTTPError, Timeout) as e:
-                # TODO: log exceptions
-                print(e)
+                logger.error(e)
 
     def get_rates(self, currency: str, to: str):
         """

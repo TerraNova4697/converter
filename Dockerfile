@@ -20,6 +20,8 @@ RUN python -m venv /py && \
         then /py/bin/pip install -r /tmp/requirements.dev.txt ; \
     fi && \
     rm -rf /tmp && \
+    mkdir /var/log/converter/ && \
+    touch /var/log/converter/debug.log && \
     apk del .tmp-build-deps && \
     adduser \
         --disabled-password \
