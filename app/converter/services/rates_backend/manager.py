@@ -16,19 +16,21 @@ class RatesManager:
 
     def get_rates(self):
         """returns dict {'result': amount} for particular currencies."""
-        value = self.cache.get_rates(f'{self.currency}{self.to}') 
+        value = self.cache.get_rates(f'{self.currency}{self.to}')
+        rate = {}
         print(value)
         if value:
             value = float(value)
-            print('FROM CACHE', value)
+            rate['source'] = 'cache'
         else:
             response = self.api.get_rates(self.currency, self.to)
             self.cache.save_rates(f'{self.currency}{self.to}', response)
             value = float(response)
-            print('FROM API', value)
+            rate['source'] = 'cache'
 
         result = self._format_float(self.amount * value)
-        return {'result': result}
+        rate['result'] = result
+        return rate
 
     def _format_float(self, value):
         """Round float value to maximum 4 digits after trailing coma and return value."""
