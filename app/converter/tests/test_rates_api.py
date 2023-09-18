@@ -3,6 +3,7 @@ Test for the rates API.
 """
 from django.urls import reverse
 from django.test import TestCase
+from django.contrib.auth import get_user_model
 from rest_framework import status
 from rest_framework.test import APIClient
 
@@ -15,13 +16,32 @@ from converter.serializers import CurrencySerializer
 RATES_URL = reverse('converter:rates')
 CURRENCIES_URL = reverse('converter:currencies')
 
+def create_user(email='user@example.com', password='string'):
+    """Create and return user."""
+    return get_user_model().objects.create_user(email=email, password=password)
 
-class RatesApiTests(TestCase):
-    """Tests for 'converter:rates' route API."""
+
+class UnauthenticatedRatesApiTests(TestCase):
+    """Test unauthenticated API requests."""
 
     def setUp(self):
         self.client = APIClient()
+
+    def testAuth_required(self):
+        """Test auth is required for retrieving rates."""
+        res = self.client.get(RATES_URL)
+
+        self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
+
+
+class AuthenticatedRatesApiTests(TestCase):
+    """Tests for 'converter:rates' route API."""
+
+    def setUp(self):
+        self.user = create_user()
+        self.client = APIClient()
         self.redis = RatesCache()
+        self.client.force_authenticate(self.user)
 
     def test_retrieve_rate(self):
         """Test retrieving simple rate."""

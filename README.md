@@ -31,15 +31,18 @@
     Опциональные:
         value (int) (default=1)
     Возвращает:
-        {
-            "result": 96.82,
-            "source": "api",
-        }
-
+        <pre>
+        ```json
+           {
+               "result": 96.82,
+               "source": "api",
+           }
+        ```
+        </pre>
 - GET /api/v1/rates/currencies/
     Получить список доступных валют для конвертации
     Возвращает:
-                <pre>
+        <pre>
         ```json
         [
             {
@@ -51,7 +54,6 @@
                 "symbol": "BTC",
             },
         ]
-
         ```
         </pre>
 
