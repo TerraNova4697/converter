@@ -7,6 +7,6 @@ from converter import views
 app_name = 'converter'
 
 urlpatterns = [
-    path('', views.get_rates, name='rates'),
-    path('/currencies/', views.currencies_list, name='currencies'),
+    path('', views.RatesAPIView.as_view(), name='rates'),
+    path('currencies', views.CurrenciesAPIView.as_view(), name='currencies'),
 ]
