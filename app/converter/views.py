@@ -8,6 +8,8 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework import authentication, permissions
 
 from converter.models import Currency
 from converter.serializers import CurrencySerializer, RatesSerializer
@@ -16,13 +18,11 @@ from converter.services.rates_backend.manager import RatesManager
 from converter.exceptions.http_exceptions import ResponseBadRequest
 
 
-@api_view(['GET'])
-def get_rates(request):
-    """
-    API method to get current rates. 'from' and 'to' query parameters must be provided.
-    """
-    if request.method == 'GET':
-        print(isinstance(request.GET.get('from'), str))
+class RatesAPIView(APIView):
+    authentication_classes = [authentication.TokenAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
         if 'from' not in request.GET or 'to' not in request.GET:
             raise ResponseBadRequest("Bad request: 'from' and 'to' query parameters are obligatory.")
         if (not isinstance(request.GET.get('from'), str) or
@@ -42,13 +42,12 @@ def get_rates(request):
             return Response(serializer.errors, status=400)
 
 
-@cache_page(60 * 30)
-@api_view(['GET'])
-def currencies_list(request):
-    """
-    API method to get all available currencies.
-    """
-    if request.method == 'GET':
+class CurrenciesAPIView(APIView):
+    authentication_classes = [authentication.TokenAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+
+    @method_decorator(cache_page(60*60*2))
+    def get(self, request):
         currencies = Currency.objects.all()
         serializer = CurrencySerializer(currencies, many=True)
         return Response(serializer.data)
