@@ -23,89 +23,91 @@
 
 ## URL маршруты
 
-- GET /api/v1/rates
-    Маршрут конвертации валют.
-    Обязательные параметры:
-        from (str)
-        to (str)
-    Опциональные:
-        value (int) (default=1)
-    Возвращает:
-        {
-            "result": 96.82,
-            "source": "api",
-        }
-
-- GET /api/v1/rates/currencies/
-    Получить список доступных валют для конвертации
-    Возвращает:
-                <pre>
-        ```json
-        [
-            {
-                "title": "United States Dollar",
-                "symbol": "USD",
-            },
-            {
-                "title": "Bitcoin",
-                "symbol": "BTC",
-            },
-        ]
-
-        ```
-        </pre>
-
-- POST /api/v1/user/create/
-    Маршрут регистрации пользователя (на данный момент регистрация не нужна)
-    Обязательные параметры:
-        <pre>
-        ```json
-        {
-            "email": "user@example.com",
-            "password": "string",
-            "name": "string",
-        }
-        ```
-        </pre>
+- GET /api/v1/rates  
+    Маршрут конвертации валют.  
+    Обязательные параметры:  
+        from (str)  
+        to (str)  
+    Опциональные:  
+        value (int) (default=1)  
     Возвращает:
         <pre>
         ```json
-        {
-            "email": "user@example.com",
-            "name": "string",
-        }
+           {  
+               "result": 96.82,  
+               "source": "api",  
+           }  
+        ```
+        </pre>
+- GET /api/v1/rates/currencies/  
+    Получить список доступных валют для конвертации  
+    Возвращает:  
+        <pre>
+        ```json
+        [  
+            {  
+                "title": "United States Dollar",  
+                "symbol": "USD",  
+            },  
+            {  
+                "title": "Bitcoin",  
+                "symbol": "BTC",  
+            },  
+        ]  
         ```
         </pre>
 
-- GET /api/v1/user/me/
-    Получить данные аутентифицированного пользователя
-    Возвращает:
+- POST /api/v1/user/create/  
+    Маршрут регистрации пользователя (на данный момент регистрация не нужна)  
+    Обязательные параметры:  
         <pre>
         ```json
-        {
-            "email": "user@example.com",
-            "name": "string",
-        }
+        {  
+            "email": "user@example.com",  
+            "password": "string",  
+            "name": "string",  
+        }  
+        ```
+        </pre>
+    Возвращает:  
+        <pre>
+        ```json
+        {  
+            "email": "user@example.com",  
+            "name": "string",  
+        }  
         ```
         </pre>
 
-- POST /api/v1/user/token/
-    Создать новый токен
-    Обязательные параметры:
+- GET /api/v1/user/me/  
+    Получить данные аутентифицированного пользователя  
+    Возвращает:  
         <pre>
         ```json
-        {
-            "email": "user@example.com",
-            "password": "string",
-        }
+        {  
+            "email": "user@example.com",  
+            "name": "string",  
+        }  
         ```
         </pre>
-    Возвращает:
+
+- POST /api/v1/user/token/  
+    Создать новый токен  
+    Обязательные параметры:  
         <pre>
         ```json
-        {
-            "email": "user@example.com",
-            "password": "string",
-        }
+        {  
+            "email": "user@example.com",  
+            "password": "string",  
+        }  
+        ```
+        </pre>
+    Возвращает:  
+        <pre>
+        ```json
+        {  
+            "email": "user@example.com",  
+            "password": "string",  
+        }  
         ```
         </pre>
