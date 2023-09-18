@@ -40,3 +40,9 @@ class RatesCache(Singleton, RatesSource):
         """
         hour_in_sec = 60*60*60
         self._redis.set(name=key, value=value, ex=hour_in_sec)
+
+    def flush_db(self):
+        """
+        Flush all data in Redis.
+        """
+        self._redis.flushdb()

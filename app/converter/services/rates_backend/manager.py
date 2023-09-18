@@ -32,7 +32,6 @@ class RatesManager:
         """
         value = self.cache.get_rates(f'{self.currency}{self.to}')
         rate = {}
-        print(value)
         if value:
             value = float(value)
             rate['source'] = 'cache'
@@ -40,7 +39,7 @@ class RatesManager:
             response = self.api.get_rates(self.currency, self.to)
             self.cache.save_rates(f'{self.currency}{self.to}', response)
             value = float(response)
-            rate['source'] = 'cache'
+            rate['source'] = 'api'
 
         result = self._format_float(self.amount * value)
         rate['result'] = result
